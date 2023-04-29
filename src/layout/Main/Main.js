@@ -12,7 +12,7 @@ const Main = () => {
                 <Navbar />
                 <div className='flex'>
                     {/* Sidebar for medium and large devices */}
-                    <div className="drawer-side hidden md:block border-t border-r rounded-lg min-h-screen dark:border-gray-700">
+                    <div className="drawer-side hidden md:block border-t border-r rounded-lg min-h-screen dark:border-gray-700 mt-2">
                         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                         <ul className="menu p-4 m-1 w-48 bg-base-100 text-base-content gap-2">
                             {/* <!-- Sidebar content here --> */}

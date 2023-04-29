@@ -4,10 +4,10 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 const Navbar = () => {
     return (
-        <div className="w-full navbar bg-base-100">
+        <div className="w-full navbar bg-base-100 shadow-md">
             <div className="flex-none md:hidden">
                 <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path d="M4 17H8M12 17H20M4 12H20M4 7H12M16 7H20" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path d="M4 17H8M12 17H20M4 12H20M4 7H12M16 7H20" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </label>
             </div>
             <div className='w-full justify-center'>
