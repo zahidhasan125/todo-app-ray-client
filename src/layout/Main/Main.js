@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Navbar from '../../components/Shared/Navbar';
 import SidebarMenus from '../../components/Shared/SidebarMenus';
 
@@ -32,8 +32,12 @@ const Main = () => {
                     {/* <!-- Sidebar content here --> */}
                     <SidebarMenus />
                     <div className='flex flex-row items-center justify-center gap-2'>
-                        <button className='btn btn-sm btn-info rounded-full text-white'>Login</button>
-                        <button className='btn btn-sm btn-success rounded-full text-white'>Sign Up</button>
+                        <Link to={`/login`} >
+                            <button className='btn btn-sm btn-info rounded-full text-white'>Login</button>
+                        </Link>
+                        <Link to={`/register`} >
+                            <button className='btn btn-sm btn-success rounded-full text-white'>Sign Up</button>
+                        </Link>
                     </div>
                 </ul>
 

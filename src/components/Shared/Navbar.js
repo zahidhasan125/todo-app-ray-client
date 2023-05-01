@@ -17,8 +17,8 @@ const Navbar = () => {
             <div className="flex-none hidden md:block">
                 <ul className="menu menu-horizontal gap-2">
                     {/* <!-- Navbar menu content here --> */}
-                    <li><Link className='btn btn-info rounded-full text-white'>Login</Link></li>
-                    <li><Link className='btn btn-success rounded-full text-white'>Sign Up</Link></li>
+                    <li><Link to={`/login`} className='btn btn-info rounded-full text-white'>Login</Link></li>
+                    <li><Link to={`/register`} className='btn btn-success rounded-full text-white'>Sign Up</Link></li>
                 </ul>
             </div>
         </div>
