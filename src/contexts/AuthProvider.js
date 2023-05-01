@@ -19,7 +19,7 @@
 
 //         return createUserWithEmailAndPassword(auth, email, pass)
 //         // const registerData = { email, pass };
-//         // const response = await fetch(`http://192.168.1.105:5000/register`, {
+//         // const response = await fetch(`https://todo-ray-backend-server.vercel.app/register`, {
 //         //     method: 'POST',
 //         //     headers: {
 //         //         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@
 
 
 //         // const loginData = { email, pass };
-//         // const response = await fetch(`http://192.168.1.105:5000/login`, {
+//         // const response = await fetch(`https://todo-ray-backend-server.vercel.app/login`, {
 //         //     method: 'POST',
 //         //     headers: {
 //         //         'Content-Type': 'application/json'

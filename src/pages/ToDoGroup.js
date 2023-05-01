@@ -19,7 +19,7 @@ const ToDoGroup = () => {
     })
 
     const getAllToDoGroup = async () => {
-        const res = await fetch(`http://192.168.1.105:5000/todo-groups?email=${user?.email}`, {
+        const res = await fetch(`https://todo-ray-backend-server.vercel.app/todo-groups?email=${user?.email}`, {
             headers: {
                 authorization: `${localStorage.getItem('todoAccessToken')}`
             }
@@ -40,7 +40,7 @@ const ToDoGroup = () => {
             user: user?.email,
             createdAt: new Date()
         };
-        const res = await fetch(`http://192.168.1.105:5000/createGroup`, {
+        const res = await fetch(`https://todo-ray-backend-server.vercel.app/createGroup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const ToDoGroup = () => {
             </div>
 
             <label htmlFor="create-group-modal" onClick={() => setShowCreateToDoGroupModal(!showCreateToDoGroupModal)} className='w-12 h-12 md:w-auto rounded-full bg-[#E4CE00] text-white text-4xl absolute right-8 bottom-8 flex items-center justify-center md:px-3 cursor-pointer'>
-                <label className='md:pl-2'>+</label>
+                <span className='md:pl-2'>+</span>
                 <span className='hidden md:block text-lg px-2 font-bold'>Create New Group</span>
             </label>
 

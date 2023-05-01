@@ -13,7 +13,7 @@ const ToDoGroupCard = ({ group, refetch }) => {
 
     const handleDeleteGroup = (id) => {
         setIsLoading(true);
-        fetch(`http://192.168.1.105:5000/delete-group?groupId=${id}`, {
+        fetch(`https://todo-ray-backend-server.vercel.app/delete-group?groupId=${id}`, {
             method: 'DELETE',
             headers: {
                 authorization: localStorage.getItem('todoAccessToken')
@@ -21,6 +21,8 @@ const ToDoGroupCard = ({ group, refetch }) => {
         }).then(res => res.json()).then(data => {
             if (data.deletedCount) {
                 setIsLoading(false);
+                toast.success('Group Deleted!')
+                refetch()
             }
         })
     }
@@ -38,7 +40,7 @@ const ToDoGroupCard = ({ group, refetch }) => {
             updatedAt: new Date()
         };
 
-        const res = await fetch(`http://192.168.1.105:5000/update-group?groupId=${_id}`, {
+        const res = await fetch(`https://todo-ray-backend-server.vercel.app/update-group?groupId=${_id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

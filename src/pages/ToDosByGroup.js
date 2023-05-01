@@ -31,7 +31,7 @@ const ToDosByGroup = () => {
     })
 
     const getAllToDoByGroup = async () => {
-        const res = await fetch(`http://192.168.1.105:5000/group/${groupId}`);
+        const res = await fetch(`https://todo-ray-backend-server.vercel.app/group/${groupId}`);
         const data = await res.json();
         return data;
     }
@@ -74,7 +74,7 @@ const ToDosByGroup = () => {
                                 user: user.email,
                                 createdAt: new Date()
                             };
-                            fetch(`http://localhost:5000/create`, {
+                            fetch(`https://todo-ray-backend-server.vercel.app/create`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const ToDosByGroup = () => {
                 user: user.email,
                 createdAt: new Date()
             };
-            const res = await fetch(`http://localhost:5000/create`, {
+            const res = await fetch(`https://todo-ray-backend-server.vercel.app/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

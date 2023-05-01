@@ -14,7 +14,7 @@ const RegisterForm = () => {
         const pass = form.password.value;
 
         const registerData = { email, pass };
-        fetch(`http://192.168.1.105:5000/register`, {
+        fetch(`https://todo-ray-backend-server.vercel.app/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

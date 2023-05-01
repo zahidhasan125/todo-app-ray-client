@@ -16,7 +16,7 @@ const LoginForm = () => {
         const email = form.email.value;
         const pass = form.password.value;
 
-        const response = await fetch(`http://192.168.1.105:5000/login`, {
+        const response = await fetch(`https://todo-ray-backend-server.vercel.app/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
