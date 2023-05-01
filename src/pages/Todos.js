@@ -42,50 +42,58 @@ const Todos = () => {
         event.preventDefault();
         const form = event.target;
         const taskName = form.taskName.value;
-        const todoDescription = form.todoDescription.value;
+        const desc = form.todoDescription.value;
+        const todoDescription = desc.split('|');
         const attached = form.file.files[0];
-        const formData = new FormData();
         const startDate = new Date(selectedStartDate.getTime());
         const endDate = new Date(selectedEndDate.getTime());
 
         if (attached) {
-            formData.append('attached', attached);
-            console.log(formData)
-            const imgbbUrl = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbbKey}`
+            function uploadImage(imageFile) {
+                const formData = new FormData();
+                formData.append('image', imageFile);
 
-            fetch(imgbbUrl, {
-                method: "POST",
-                body: formData
-            })
-                .then(res => res.json())
-                .then(async imgData => {
-                    if (imgData.success) {
-                        const toDoData = {
-                            taskName,
-                            todoDescription,
-                            startDate,
-                            endDate,
-                            attachment: imgData.data.url,
-                            user: currentUser?.email,
-                            createdAt: new Date()
-                        };
-                        const res = await fetch(`http://localhost:5000/create`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                authorization: `${localStorage.getItem('todoAccessToken')}`
-                            },
-                            body: JSON.stringify(toDoData)
-                        })
-                        const data = await res.json();
-                        console.log(data)
-                        if (data.acknowledged) {
-                            refetch();
-                            setShowCreateToDoModal(false);
-                        }
-                    }
+                fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbbKey}`, {
+                    method: 'POST',
+                    body: formData,
                 })
-                .catch(err => console.log(err))
+                    .then(response => response.json())
+                    .then(imgData => {
+                        console.log(imgData)
+                        if (imgData.success) {
+                            const toDoData = {
+                                taskName,
+                                todoDescription,
+                                startDate,
+                                endDate,
+                                attachment: imgData.data.url,
+                                user: currentUser.email,
+                                createdAt: new Date()
+                            };
+                            fetch(`http://localhost:5000/create`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    authorization: `${localStorage.getItem('todoAccessToken')}`
+                                },
+                                body: JSON.stringify(toDoData)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data)
+
+                                    if (data.acknowledged) {
+                                        refetch();
+                                        setShowCreateToDoModal(false);
+                                    }
+                                })
+
+                        }
+                    })
+                    .catch(error => console.error(error));
+            }
+            
+            uploadImage(attached);
         } else {
             const toDoData = {
                 taskName,
@@ -122,7 +130,7 @@ const Todos = () => {
             }
             <h3 className='text-2xl font-semibold mb-5'>My ToDos</h3>
             {
-                myToDos?.map(toDo => <ToDo key={toDo._id} toDo={toDo} />)
+                myToDos?.map(toDo => <ToDo key={toDo._id} toDo={toDo} refetch={refetch} />)
             }
 
             {/* Add ToDo button */}

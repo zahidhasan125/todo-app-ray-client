@@ -96,7 +96,7 @@ const ToDosByGroup = () => {
                     })
                     .catch(error => console.error(error));
             }
-            
+
             uploadImage(attached);
 
         } else {
@@ -134,7 +134,7 @@ const ToDosByGroup = () => {
             }
             <h3 className='text-2xl font-semibold mb-5'>{groupName}</h3>
             {
-                allToDosByGroup?.map(toDo => <ToDo key={toDo._id} toDo={toDo} />)
+                allToDosByGroup?.map(toDo => <ToDo key={toDo._id} toDo={toDo} refetch={refetch} />)
             }
 
             {/* Add ToDo button */}
