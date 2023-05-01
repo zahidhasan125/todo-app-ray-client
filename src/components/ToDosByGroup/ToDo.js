@@ -13,6 +13,7 @@ const ToDo = ({ toDo, refetch }) => {
     const [showDetails, setShowDetails] = useState(false);
     const { _id, completedData, taskName, todoDescription, startDate, endDate, attachment } = toDo;
     const [isLoading, setIsLoading] = useState(false);
+    
 
     const { user } = useContext(AuthContext);
 
@@ -71,6 +72,7 @@ const ToDo = ({ toDo, refetch }) => {
         }).then(res => res.json()).then(data => {
             if (data.deletedCount) {
                 setIsLoading(false);
+                
                 refetch();
             }
         })

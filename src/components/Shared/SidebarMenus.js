@@ -8,7 +8,6 @@ const SidebarMenus = () => {
             <Link className='w-full' to={'/todos'}><li className='btn btn-sm md:btn-md btn-outline btn-info rounded-full w-full'>My ToDos</li></Link>
             <Link className='w-full' to={'/completed'}><li className='btn btn-sm md:btn-md btn-outline btn-success rounded-full w-full'>Completed</li></Link>
             <Link className='w-full' to={'/processing'}><li className='btn btn-sm md:btn-md btn-outline btn-warning rounded-full w-full'>Processing</li></Link>
-            <Link className='w-full' to={'/not-completed'}><li className='btn btn-sm md:btn-md btn-outline btn-error rounded-full w-full'>Not Completed</li></Link>
         </div>
     );
 };

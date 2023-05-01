@@ -53,7 +53,6 @@ const ToDoGroup = () => {
             refetch();
             setShowCreateToDoGroupModal(false);
         }
-        console.log(data)
     }
     return (
         <div>
@@ -63,7 +62,7 @@ const ToDoGroup = () => {
                 <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
 
                     {
-                        toDoGroups.map(group => <ToDoGroupCard key={group?._id} group={group} />)
+                        toDoGroups.map(group => <ToDoGroupCard key={group?._id} group={group} refetch={refetch} />)
                     }
 
                 </div>

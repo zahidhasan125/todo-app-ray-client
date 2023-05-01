@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import toast from 'react-hot-toast'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
 
     const { userLogin } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const handleLogin = async (event) => {
         event.preventDefault();
         const form = event.target;
@@ -24,7 +29,8 @@ const LoginForm = () => {
                 .then(result => {
                     console.log(result.user);
                     localStorage.setItem('todoAccessToken', `Bearer ${loginRes?.todoAccessToken}`);
-                    toast.success('Login Successful!')
+                    toast.success('Login Successful!');
+                    navigate(from, { replace: true });
                 })
                 .catch(err => {
                     toast.error(err.message)
