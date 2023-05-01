@@ -14,7 +14,7 @@ const ToDosByGroup = () => {
     const [selectedEndDate, setSelectedEndDate] = useState(new Date());
     const [showAddToDoModal, setShowAddToDoModal] = useState(false);
 
-    const { currentUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const location = useLocation();
     const paths = location.pathname.split('/');
     const groupId = paths[paths.length - 1];
@@ -71,7 +71,7 @@ const ToDosByGroup = () => {
                                 startDate,
                                 endDate,
                                 attachment: imgData.data.url,
-                                user: currentUser.email,
+                                user: user.email,
                                 createdAt: new Date()
                             };
                             fetch(`http://localhost:5000/create`, {
@@ -106,7 +106,7 @@ const ToDosByGroup = () => {
                 todoDescription,
                 startDate,
                 endDate,
-                user: currentUser.email,
+                user: user.email,
                 createdAt: new Date()
             };
             const res = await fetch(`http://localhost:5000/create`, {
@@ -125,7 +125,8 @@ const ToDosByGroup = () => {
             }
         }
     }
-    console.log(allToDosByGroup)
+    const totalCompletedToDos = allToDosByGroup.filter(item => item.completedData?.isCompleted === true);
+    const completedPercentage = ((totalCompletedToDos.length / allToDosByGroup.length) * 100).toFixed(0);
     return (
         <div className='mx-8 my-10 w-full'>
             {
@@ -133,6 +134,11 @@ const ToDosByGroup = () => {
                 <Loader />
             }
             <h3 className='text-2xl font-semibold mb-5'>{groupName}</h3>
+            <progress className="progress progress-success w-full mt-3 max-w-sm" value={completedPercentage} max="100"></progress>
+            <div className='flex items-center justify-between max-w-sm mb-3 px-4'>
+                <p className='text-black font-bold text-[10px]'>{completedPercentage}% Complete</p>
+                <p className='text-black font-bold text-[10px]'>{100 - completedPercentage}% Processing</p>
+            </div>
             {
                 allToDosByGroup?.map(toDo => <ToDo key={toDo._id} toDo={toDo} refetch={refetch} />)
             }

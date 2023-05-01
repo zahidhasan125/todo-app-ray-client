@@ -6,11 +6,11 @@ import Loader from '../components/Shared/Loader';
 
 const ToDoGroup = () => {
 
-    const { currentUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [showCreateToDoGroupModal, setShowCreateToDoGroupModal] = useState(false);
 
     const { data: toDoGroups = [], isLoading, refetch } = useQuery({
-        queryKey: ['toDoGroups', currentUser?.email],
+        queryKey: ['toDoGroups', user?.email],
         queryFn: async () => {
             const data = await getAllToDoGroup();
             return data;
@@ -19,7 +19,7 @@ const ToDoGroup = () => {
     })
 
     const getAllToDoGroup = async () => {
-        const res = await fetch(`http://192.168.1.105:5000/todo-groups?email=${currentUser?.email}`, {
+        const res = await fetch(`http://192.168.1.105:5000/todo-groups?email=${user?.email}`, {
             headers: {
                 authorization: `${localStorage.getItem('todoAccessToken')}`
             }
@@ -37,7 +37,7 @@ const ToDoGroup = () => {
         const newGroup = {
             groupDescription,
             todoGroupName,
-            user: currentUser?.email,
+            user: user?.email,
             createdAt: new Date()
         };
         const res = await fetch(`http://192.168.1.105:5000/createGroup`, {
@@ -57,7 +57,7 @@ const ToDoGroup = () => {
     }
     return (
         <div>
-            { isLoading && <Loader />}
+            {isLoading && <Loader />}
             <div className='mx-8 my-10'>
                 <h3 className='text-2xl font-semibold mb-5'>ToDo Groups</h3>
                 <div className='grid grid-cols-2 md:grid-cols-3 gap-3'>

@@ -14,7 +14,7 @@ const ToDo = ({ toDo, refetch }) => {
     const { _id, completedData, taskName, todoDescription, startDate, endDate, attachment } = toDo;
     const [isLoading, setIsLoading] = useState(false);
 
-    const { currentUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const formatDate = (date) => {
         return format(date, 'dd MMM yyyy');
@@ -26,7 +26,7 @@ const ToDo = ({ toDo, refetch }) => {
         const comment = event.target.comment.value;
         const completeData = { comment, isCompleted: completedData?.isCompleted ? false : true };
 
-        fetch(`http://192.168.1.105:5000/update?todoId=${_id}&email=${currentUser.email}`, {
+        fetch(`http://192.168.1.105:5000/update?todoId=${_id}&email=${user.email}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const ToDo = ({ toDo, refetch }) => {
         setIsLoading(true);
         const completeData = { isCompleted: completedData?.isCompleted ? false : true };
 
-        fetch(`http://192.168.1.105:5000/update?todoId=${_id}&email=${currentUser.email}`, {
+        fetch(`http://192.168.1.105:5000/update?todoId=${_id}&email=${user.email}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,6 +55,21 @@ const ToDo = ({ toDo, refetch }) => {
             body: JSON.stringify(completeData)
         }).then(res => res.json()).then(data => {
             if (data.modifiedCount) {
+                setIsLoading(false);
+                refetch();
+            }
+        })
+    }
+
+    const handleDeleteToDo = (id) => {
+        setIsLoading(true);
+        fetch(`http://192.168.1.105:5000/delete?todoId=${id}&email=${user.email}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: localStorage.getItem('todoAccessToken')
+            }
+        }).then(res => res.json()).then(data => {
+            if (data.deletedCount) {
                 setIsLoading(false);
                 refetch();
             }
@@ -70,8 +85,8 @@ const ToDo = ({ toDo, refetch }) => {
 
                     <div className={`flex gap-3 items-center`}>
                         <input type="checkbox" name="isCompleted" id="isCompleted" onChange={handleCheckBox} defaultChecked={completedData?.isCompleted} className={`checkbox checkbox-sm checkbox-warning rounded-none ${showDetails && 'hidden'}`} />
-                        <div className={`flex items-center justify-between flex-grow ${completedData?.isCompleted && showDetails && 'bg-[#28C76F] rounded-md'}`}>
-                            <h4 className={`${completedData?.isCompleted && showDetails && 'pl-2'} text-sm font-semibold`}>{taskName}</h4>
+                        <div className={`flex items-center justify-between flex-grow ${completedData?.isCompleted && showDetails && 'bg-[#28C76F] rounded-md text-white'}`}>
+                            <h4 className={`${completedData?.isCompleted && showDetails && 'pl-2 '} ${completedData?.isCompleted && 'text-white'} text-sm font-semibold`}>{taskName}</h4>
                             <div className={`flex items-center gap-4`}>
                                 <div className={`dropdown dropdown-end ${showDetails || 'hidden'}`}>
                                     <label tabIndex={0} className="btn btn-ghost btn-sm btn-circle">
@@ -83,7 +98,7 @@ const ToDo = ({ toDo, refetch }) => {
                                         <div className="card-body p-0 shadow-md">
                                             <div className="btn-group btn-group-vertical w-24">
                                                 <button className="btn btn-sm btn-outline bg-base-100 text-xs font-semibold">Edit</button>
-                                                <button className="btn btn-sm btn-outline bg-base-100 text-xs font-semibold">Delete</button>
+                                                <button onClick={() => handleDeleteToDo(_id)} className="btn btn-sm btn-outline bg-base-100 text-xs font-semibold">Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +150,7 @@ const ToDo = ({ toDo, refetch }) => {
                                 <textarea type="text" name='comment' placeholder="Type comment..." className="textarea textarea-xs w-full max-w-xs border-b-[#E4CE00] border-base-100 border-b-2 rounded-none text-md" ></textarea>
                             </div>
 
-                            <button type='submit' className='btn btn-sm md:btn-md btn-warning rounded-full text-sm font-bold mb-4'>{ completedData?.isCompleted ? 'Not Completed' : 'Complete ToDo'}</button>
+                            <button type='submit' className='btn btn-sm md:btn-md btn-warning rounded-full text-sm font-bold mb-4'>{completedData?.isCompleted ? 'Not Completed' : 'Complete ToDo'}</button>
                         </form>
                     </div>
                 </div>

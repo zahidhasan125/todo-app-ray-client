@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { AuthContext } from '../../contexts/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                toast.success('Successfully Logged Out!');
+                localStorage.clear();
+            }).catch(() => { });
+    }
+
     return (
         <div className="w-full navbar bg-base-100 shadow-md">
             <div className="flex-none md:hidden">
@@ -17,8 +30,17 @@ const Navbar = () => {
             <div className="flex-none hidden md:block">
                 <ul className="menu menu-horizontal gap-2">
                     {/* <!-- Navbar menu content here --> */}
-                    <li><Link to={`/login`} className='btn btn-info rounded-full text-white'>Login</Link></li>
-                    <li><Link to={`/register`} className='btn btn-success rounded-full text-white'>Sign Up</Link></li>
+                    {
+                        user ?
+                            <li><button onClick={handleLogout} className='btn btn-error rounded-full text-white'>Logout</button></li>
+                            :
+                            <>
+                                <li><Link to={`/login`} className='btn btn-info rounded-full text-white'>Login</Link></li>
+                                <li><Link to={`/register`} className='btn btn-success rounded-full text-white'>Sign Up</Link></li>
+                            </>
+                    }
+
+
                 </ul>
             </div>
         </div>
